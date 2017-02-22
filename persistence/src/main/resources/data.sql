@@ -1,0 +1,1 @@
+insert into users(id,created,name,password,userType,username) values(1,now(),'Poxos',2525,'MANAGER','poxos1');

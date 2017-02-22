@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byName" default-lazy-init="true">
+
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.vahan.repository.user"/>
+
+    <bean id="dbProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="locations">
+            <list>
+                <value>classpath:database.properties</value>
+            </list>
+        </property>
+        <property name="ignoreResourceNotFound" value="true"/>
+    </bean>
+
+    <!--Import datasource config-->
+    <import resource="applicationContext-persistence-jpa-datasource.xml"/>
+
+    <!--Import repositories config-->
+    <import resource="applicationContext-persistence-jpa-repositories.xml"/>
+
+
+    <!--Initializing jpa vendor adapter-->
+    <bean id="jpaVendorAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="showSql" value="#{dbProperties['hibernate.show_sql']}"/>
+        <property name="generateDdl" value="#{dbProperties['hibernate.generateDdl']}"/>
+        <property name="databasePlatform" value="#{dbProperties['hibernate.dialect']}"/>
+    </bean>
+
+
+    <!--Initializing E Manager Factory-->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="persistenceUnitName" value="com_vahan_jpa_test_persistence_unit"/>
+        <property name="jpaVendorAdapter" ref="jpaVendorAdapter"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
+                <prop key="hibernate.format_sql">#{dbProperties['hibernate.format_sql']}</prop>
+                <prop key="hibernate.hbm2ddl.auto">#{dbProperties['hibernate.hbm2ddl.auto']}</prop>
+            </props>
+        </property>
+    </bean>
+
+
+    <!--Initializing transaction manager-->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+</beans>

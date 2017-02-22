@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"
+       default-lazy-init="false" default-autowire="byName">
+
+    <bean id="pooledDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+
+        <property name="driverClass" value="#{dbProperties['jdbc.driverClass']}"/>
+        <property name="jdbcUrl" value="#{dbProperties['jdbc.url']}"/>
+        <property name="user" value="#{dbProperties['jdbc.username']}"/>
+        <property name="password" value="#{dbProperties['jdbc.password']}"/>
+        <property name="initialPoolSize" value="#{dbProperties['c3p0.initialPoolSize']}"/>
+        <property name="minPoolSize" value="#{dbProperties['c3p0.minPoolSize']}"/>
+        <property name="maxPoolSize" value="#{dbProperties['c3p0.maxPoolSize']}"/>
+        <property name="checkoutTimeout" value="#{dbProperties['c3p0.checkoutTimeout']}"/>
+        <property name="maxStatements" value="#{dbProperties['c3p0.maxStatements']}"/>
+        <property name="testConnectionOnCheckin" value="#{dbProperties['c3p0.testConnectionOnCheckin']}"/>
+        <property name="testConnectionOnCheckout" value="#{dbProperties['c3p0.testConnectionOnCheckout']}"/>
+        <property name="maxIdleTime" value="#{dbProperties['c3p0.maxIdleTime']}"/>
+        <property name="idleConnectionTestPeriod" value="#{dbProperties['c3p0.idleConnectionTestPeriod']}"/>
+        <property name="preferredTestQuery" value="#{dbProperties['c3p0.preferredTestQuery']}"/>
+
+    </bean>
+
+    <bean id="dataSource" class="org.jdbcdslog.ConnectionPoolDataSourceProxy">
+        <property name="targetDSDirect" ref="pooledDataSource"/>
+    </bean>
+
+</beans>

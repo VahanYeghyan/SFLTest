@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+</head>
+<body>
+<h1>admin page</h1>
+<br/>
+
+
+<div wicket:id="userMarkup">
+    <div wicket:id="userModal"></div>
+</div>
+<br/>
+
+<a wicket:id="clickToOpenUserForm"><h2>create a user</h2></a>
+
+<br/>
+<div wicket:id="feedback"></div>
+<br/><br/>
+
+<h2>user's list</h2>
+<div wicket:id="userDataViewMarkup">
+    <table border="1">
+        <tr>
+            <td>Name</td>
+            <td>Username</td>
+            <td>User type</td>
+        </tr>
+        <tr wicket:id="userDataView">
+            <td wicket:id="name"></td>
+            <td wicket:id="username"></td>
+            <td wicket:id="userType"></td>
+        </tr>
+    </table>
+    <div wicket:id="navigator"></div>
+</div>
+<br/><br/>
+
+<br>
+<h2>create table</h2>
+<br>
+<form wicket:id="tableForm">
+    <input type="text" wicket:id="tableNumber">
+    <input type="submit" wicket:id="waiterToTableSubmit">
+</form>
+<br>
+
+<h2>create product</h2>
+<br>
+<div>
+<form wicket:id="productForm">
+    <input type="text" wicket:id="productName">
+    <input type="submit" >
+</form>
+</div>
+<br>
+
+<div wicket:id="waiterToTableMarkup">
+<h2>attach table to waiter</h2>
+<form wicket:id="waitersToTables">
+ select waiter            <select wicket:id="selectWaiter"></select>
+ select number of table   <select wicket:id="selectTable"></select>
+ <br><br>   <input type="submit">
+</form>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - SFLTest@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="SFLTest">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="ConnectJSP"/>
+    <schema id="3" name="Hiber"/>
+    <schema id="4" name="hibernate"/>
+    <schema id="5" name="information_schema"/>
+    <schema id="6" name="jpatest"/>
+    <schema id="7" name="LoginRegisterTestDb"/>
+    <schema id="8" name="mysql"/>
+    <schema id="9" name="OAuth2Test"/>
+    <schema id="10" name="performance_schema"/>
+    <schema id="11" name="projectmanagement"/>
+    <schema id="12" name="restclienttest"/>
+    <schema id="13" name="Table3"/>
+    <schema id="14" name="test oauth2"/>
+    <schema id="15" name="testDatabase"/>
+    <schema id="16" name="testwebsfl"/>
+    <schema id="17" name="twitter"/>
+    <table id="18" parent="1" name="hibernate_sequence"/>
+    <table id="19" parent="1" name="orders"/>
+    <table id="20" parent="1" name="users"/>
+    <table id="21" parent="1" name="users_orders"/>
+    <table id="22" parent="1" name="product"/>
+    <table id="23" parent="1" name="product_in_order"/>
+    <table id="24" parent="1" name="tables"/>
+    <column id="25" parent="18" name="next_val">
+      <data-type>bigint(20)|0</data-type>
+    </column>
+    <column id="26" parent="19" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="27" parent="19" name="table_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <index id="28" parent="19" name="FKrkhrp1dape261t3x3spj7l5ny">
+      <columns>table_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="29" parent="19" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="30" parent="19" name="FKrkhrp1dape261t3x3spj7l5ny">
+      <columns>table_id</columns>
+      <ref-key>~.tables.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="31" parent="20" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="32" parent="20" name="created">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="33" parent="20" name="name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="34" parent="20" name="password">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="35" parent="20" name="removed">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="36" parent="20" name="updated">
+      <data-type>datetime|0</data-type>
+    </column>
+    <column id="37" parent="20" name="userType">
+      <mandatory>1</mandatory>
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="38" parent="20" name="username">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <key id="39" parent="20" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="40" parent="21" name="User_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="41" parent="21" name="order_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <index id="42" parent="21" name="UK_24ddthefbxfibp1wa2gfb18ue">
+      <columns>order_id</columns>
+      <desc-columns></desc-columns>
+      <unique>1</unique>
+    </index>
+    <key id="43" parent="21" name="PRIMARY">
+      <columns>User_id
+order_id</columns>
+      <primary>1</primary>
+    </key>
+    <key id="44" parent="21" name="UK_24ddthefbxfibp1wa2gfb18ue">
+      <columns>order_id</columns>
+      <underlying-index>UK_24ddthefbxfibp1wa2gfb18ue</underlying-index>
+    </key>
+    <foreign-key id="45" parent="21" name="FK5ugf1w7g3dtx03xldyv3u421a">
+      <columns>User_id</columns>
+      <ref-key>~.users.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="46" parent="21" name="FKo2osv03kxanvvu12txosfssj6">
+      <columns>order_id</columns>
+      <ref-key>~.orders.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="47" parent="22" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="48" parent="22" name="name">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="49" parent="22" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="50" parent="23" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="51" parent="23" name="amount">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="52" parent="23" name="order_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="53" parent="23" name="product_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <index id="54" parent="23" name="FK7qpekps6q9cyrhax6hfu3m2gm">
+      <columns>product_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="55" parent="23" name="FKl37w7v97lwh833c4gc2qotnxt">
+      <columns>order_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="56" parent="23" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+    <foreign-key id="57" parent="23" name="FKl37w7v97lwh833c4gc2qotnxt">
+      <columns>order_id</columns>
+      <ref-key>~.orders.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="58" parent="23" name="FK7qpekps6q9cyrhax6hfu3m2gm">
+      <columns>product_id</columns>
+      <ref-key>~.product.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="59" parent="24" name="id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="60" parent="24" name="number">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="61" parent="24" name="PRIMARY">
+      <columns>id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>
