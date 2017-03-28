@@ -10,6 +10,7 @@ import com.vahan.repository.user.UserRepository;
 import com.vahan.service.user.UserNotFoundException;
 import com.vahan.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
     //saving user
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     @Override
-    public void saveUser(User user) {
+    public void saveUser(User user)throws UsernameNotFoundException {
 
         if (user == null) {
             throw new UserNotFoundException("user must be not null");

@@ -26,7 +26,6 @@ public class OrderServiceImpl implements OrderService {
 
 
     //getting all orders
-    @Transactional
     @Override
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -38,5 +37,11 @@ public class OrderServiceImpl implements OrderService {
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
+    }
+
+    @Override
+    public Order getOrderByTableNumber(int i) {
+
+        return orderRepository.getOrderByTableNumber(i);
     }
 }

@@ -10,6 +10,7 @@ import com.vahan.model.user.User;
 import com.vahan.model.user.UserType;
 import com.vahan.repository.products.ProductsRepository;
 import com.vahan.repository.tables.TablesRepository;
+import com.vahan.service.product.ProductService;
 import com.vahan.service.table.TableService;
 import com.vahan.service.user.UserService;
 import com.vahan.web.pages.helper.interfaces.ManagerHelper;
@@ -17,6 +18,7 @@ import com.vahan.web.pages.model.ProductPageModel;
 import com.vahan.web.pages.model.TablePageModel;
 import com.vahan.web.pages.model.UserPageModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -24,7 +26,7 @@ import org.springframework.util.Assert;
 import java.io.Serializable;
 import java.util.List;
 
-@Service
+@Component
 public class ManagerHelperImpl implements ManagerHelper,Serializable {
 
     private static final long serialVersionUID = -353088700420851271L;
@@ -36,10 +38,10 @@ public class ManagerHelperImpl implements ManagerHelper,Serializable {
     private TableService tableService;
 
     @Autowired
-    private ProductsRepository productsRepository;
+    private TablesRepository tablesRepository;
 
     @Autowired
-    private TablesRepository tablesRepository;
+    private ProductService productService;
 
 
     //getting whole user list
@@ -109,10 +111,12 @@ public class ManagerHelperImpl implements ManagerHelper,Serializable {
     //creating table
     @Override
     public void createTable(TablePageModel tablePageModel) {
-        Table table = new Table();
-        table.setNumber(tablePageModel.getNumber());
-        tableService.saveTable(table);
 
+        if (tableService.getTableByNumber(tablePageModel.getNumber()) == null){
+            Table table = new Table();
+            table.setNumber(tablePageModel.getNumber());
+            tableService.saveTable(table);
+        }
     }
 
     //creating product
@@ -120,7 +124,8 @@ public class ManagerHelperImpl implements ManagerHelper,Serializable {
     public void createProduct(ProductPageModel productPageModel) {
         Product product = new Product();
         product.setName(productPageModel.getName());
-        productsRepository.save(product);
+        product.setPrice(productPageModel.getPrice());
+        productService.saveProduct(product);
 
     }
 

@@ -26,6 +26,8 @@ import javax.servlet.http.HttpSession;
 public class SecureWebSession extends AuthenticatedWebSession {
 
 
+    private static final long serialVersionUID = -688116078226608771L;
+
     private static Logger logger = Logger.getLogger(SecureWebSession.class);
 
     private HttpSession httpSession;

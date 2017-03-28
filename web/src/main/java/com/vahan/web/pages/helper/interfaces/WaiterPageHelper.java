@@ -1,7 +1,10 @@
 package com.vahan.web.pages.helper.interfaces;
 
 import com.vahan.model.order.Order;
+import com.vahan.model.product.Product;
 import com.vahan.web.pages.model.OrderPageModel;
+import com.vahan.web.pages.model.ProductInOrderPageModel;
+import com.vahan.web.pages.model.ProductPageModel;
 
 import java.util.List;
 
@@ -15,4 +18,12 @@ public interface WaiterPageHelper {
     Order saveOrder(OrderPageModel orderPageModel);
 
     void changeListOfOrders(OrderPageModel orderPageModel);
+
+    List<Product> getAllProducts(ProductPageModel productPageModel);
+
+    List<Integer> productPieces();
+
+    void createProductInOrder(ProductInOrderPageModel productInOrderPageModel);
+
+    void createOrder();
 }

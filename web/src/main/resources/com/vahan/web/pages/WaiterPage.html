@@ -6,11 +6,42 @@
 </head>
 <body>
 
+<h2><span wicket:id="message"></span></h2>
+<br>
+<a wicket:id="toHomePage"><h3>go to home page</h3></a>
+<br>
+
+
 <div wicket:id="createOrderContainer">
+
+    <div wicket:id="feedback"></div>
+    <br>
+
+
+    <h2>create order</h2>
     <form wicket:id="orderCreateForm">
-        <select wicket:id="tableSelect"></select>
+        <input type="submit" wicket:id="orderCreateConfirm" value="create order">
+    </form>
+
+    <br>
+    <h2>create product in order</h2>
+
+    <br>
+
+    <form wicket:id="productInOrderCreateForm">
+        <table border="1">
+            <tr>
+                <th>choose product</th>
+                <th>select pieces</th>
+                <th>confirm</th>
+            </tr>
+                <td><select wicket:id="productDropDownChoice"></select></td>
+                <td><select wicket:id="piecesDropDownChoice"></select></td>
+                <td><input type="submit" wicket:id="confirmProductInOrder" value="create"></td>
+        </table>
     </form>
 </div>
+
 
 </body>
 </html>

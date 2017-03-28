@@ -38,6 +38,7 @@ public class TableServiceImpl implements TableService {
 
     @Override
     public Table getTableByNumber(int number) {
+
         return tablesRepository.getTableByNumber(number);
     }
 

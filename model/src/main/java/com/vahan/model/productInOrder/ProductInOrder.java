@@ -2,13 +2,19 @@ package com.vahan.model.productInOrder;
 
 import com.vahan.model.order.Order;
 import com.vahan.model.product.Product;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by vahan on 2/17/17.
  */
+
 @Entity
 @Table(name="product_in_order")
 public class ProductInOrder implements Serializable{
@@ -20,15 +26,19 @@ public class ProductInOrder implements Serializable{
     @Column(name = "id")
     private int id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id")
-    private Product product;
-
     @OneToOne(fetch = FetchType.LAZY)
-    private Order order;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
     @Column(name = "amount")
     private int amount;
+
+    @Column(name = "pieces")
+    private int pieces;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Order order;
+
 
     //getters and setters
 
@@ -38,6 +48,14 @@ public class ProductInOrder implements Serializable{
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public Product getProduct() {
@@ -56,11 +74,39 @@ public class ProductInOrder implements Serializable{
         this.order = order;
     }
 
-    public int getAmount() {
-        return amount;
+    public int getPieces() {
+        return pieces;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setPieces(int pieces) {
+        this.pieces = pieces;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ProductInOrder that = (ProductInOrder) o;
+
+        return new EqualsBuilder()
+                .append(getId(), that.getId())
+                .append(getAmount(), that.getAmount())
+                .append(getPieces(), that.getPieces())
+                .append(getProduct(), that.getProduct())
+                .append(getOrder(), that.getOrder())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .append(getProduct())
+                .append(getAmount())
+                .append(getPieces())
+                .append(getOrder())
+                .toHashCode();
     }
 }

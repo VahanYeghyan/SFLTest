@@ -16,4 +16,5 @@ public interface TableService {
     Table getTableByNumber(int number);
 
     List<Integer> tableNumbers();
+
 }

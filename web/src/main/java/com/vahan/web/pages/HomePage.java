@@ -98,7 +98,7 @@ public class HomePage extends WebPage {
         add(managerLink);
 
         //link to user page
-        Link<Void> userPageLink = new Link<Void>("userPage") {
+        Link<Void> waiterPageLink = new Link<Void>("userPage") {
             private static final long serialVersionUID = -4437254636877662946L;
 
             @Override
@@ -135,8 +135,13 @@ public class HomePage extends WebPage {
             }
         };
 
-        add(userPageLink);
+        add(waiterPageLink);
 
-
+        if (SecureWebSession.getHttpSession().getUser() == null){
+            logout.setVisible(false);
+        }
+        else{
+            loginLink.setVisible(false);
+        }
     }
 }

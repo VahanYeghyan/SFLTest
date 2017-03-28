@@ -12,4 +12,6 @@ public interface OrderService {
     List<Order> getAllOrders();
 
     Order saveOrder(Order order);
+
+    Order getOrderByTableNumber(int i);
 }

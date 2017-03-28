@@ -5,8 +5,12 @@ package com.vahan.model.user;
  */
 
 import com.vahan.model.order.Order;
+import com.vahan.model.table.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -26,7 +30,7 @@ public class User implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "username")
+    @Column(name = "username",unique = true)
     private String username;
 
     @Column(name = "password")
@@ -35,7 +39,6 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "userType", nullable = false)
     private UserType userType;
-
 
     @Column(name = "created", nullable = false)
     private LocalDateTime created;
@@ -46,13 +49,8 @@ public class User implements Serializable {
     @Column(name = "updated")
     private LocalDateTime updated;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private Set<Order> order = new HashSet<>();
-
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    com.vahan.model.table.Table table;
-
+    @OneToOne(mappedBy = "user")
+    private com.vahan.model.table.Table table;
 
     /*Constructor*/
     public User() {
@@ -125,19 +123,47 @@ public class User implements Serializable {
         this.updated = updated;
     }
 
-    public Set<Order> getOrder() {
-        return order;
-    }
-
-    public void setOrder(Set<Order> order) {
-        this.order = order;
-    }
-
     public com.vahan.model.table.Table getTable() {
         return table;
     }
 
     public void setTable(com.vahan.model.table.Table table) {
         this.table = table;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return new EqualsBuilder()
+                .append(getId(), user.getId())
+                .append(getName(), user.getName())
+                .append(getUsername(), user.getUsername())
+                .append(getPassword(), user.getPassword())
+                .append(getUserType(), user.getUserType())
+                .append(getCreated(), user.getCreated())
+                .append(getRemoved(), user.getRemoved())
+                .append(getUpdated(), user.getUpdated())
+                .append(getTable(), user.getTable())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .append(getName())
+                .append(getUsername())
+                .append(getPassword())
+                .append(getUserType())
+                .append(getCreated())
+                .append(getRemoved())
+                .append(getUpdated())
+                .append(getTable())
+                .toHashCode();
     }
 }

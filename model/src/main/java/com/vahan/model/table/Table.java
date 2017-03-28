@@ -2,6 +2,8 @@ package com.vahan.model.table;
 
 import com.vahan.model.order.Order;
 import com.vahan.model.user.User;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,8 +12,7 @@ import java.io.Serializable;
  * Created by vahan on 2/17/17.
  */
 @Entity
-@javax.persistence.Table(name = "tables",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"id", "user_id"}))
+@javax.persistence.Table(name = "tables")
 public class Table implements Serializable {
 
 
@@ -21,15 +22,15 @@ public class Table implements Serializable {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "number")
+    @Column(name = "number",unique = true)
     private int number;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
-    private Order order;
-
     @OneToOne(fetch = FetchType.LAZY)
-    User user;
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToOne(mappedBy = "table")
+    private Order order;
 
     //getters and setters
 
@@ -49,6 +50,14 @@ public class Table implements Serializable {
         this.number = number;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     public Order getOrder() {
         return order;
     }
@@ -57,11 +66,29 @@ public class Table implements Serializable {
         this.order = order;
     }
 
-    public User getUser() {
-        return user;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Table table = (Table) o;
+
+        return new EqualsBuilder()
+                .append(getId(), table.getId())
+                .append(getNumber(), table.getNumber())
+                .append(getUser(), table.getUser())
+                .append(getOrder(), table.getOrder())
+                .isEquals();
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .append(getNumber())
+                .append(getUser())
+                .append(getOrder())
+                .toHashCode();
     }
 }

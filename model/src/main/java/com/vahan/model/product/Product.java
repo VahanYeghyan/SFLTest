@@ -1,6 +1,8 @@
 package com.vahan.model.product;
 
 import com.vahan.model.productInOrder.ProductInOrder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,11 +21,13 @@ public class Product implements Serializable{
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name")
+    @Column(name = "name",unique = true)
     private String name;
 
-    @OneToOne
-    @PrimaryKeyJoinColumn
+    @Column(name="price")
+    private int price;
+
+    @OneToOne(mappedBy = "product")
     private ProductInOrder productInOrder;
 
     //getters and setters
@@ -50,5 +54,39 @@ public class Product implements Serializable{
 
     public void setProductInOrder(ProductInOrder productInOrder) {
         this.productInOrder = productInOrder;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return new EqualsBuilder()
+                .append(getId(), product.getId())
+                .append(getPrice(), product.getPrice())
+                .append(getName(), product.getName())
+                .append(getProductInOrder(), product.getProductInOrder())
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .append(getName())
+                .append(getPrice())
+                .append(getProductInOrder())
+                .toHashCode();
     }
 }

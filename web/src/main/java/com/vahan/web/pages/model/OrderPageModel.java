@@ -4,7 +4,6 @@ package com.vahan.web.pages.model;
  * Created by vahan on 2/17/17.
  */
 
-import com.vahan.model.order.Status;
 import com.vahan.model.order.Order;
 import com.vahan.model.productInOrder.ProductInOrder;
 import com.vahan.model.table.Table;
@@ -22,8 +21,6 @@ public class OrderPageModel implements Serializable{
     private int id;
 
     private User user;
-
-    private Status status;
 
     private List<Order> ordersList;
 
@@ -53,14 +50,6 @@ public class OrderPageModel implements Serializable{
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public List<Order> getOrdersList() {

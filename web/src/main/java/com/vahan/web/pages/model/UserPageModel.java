@@ -99,10 +99,6 @@ public class UserPageModel implements Serializable {
         this.orders = orders;
     }
 
-    public List<User> getUserList() {
-        return userList;
-    }
-
     public Table getTable() {
         return table;
     }

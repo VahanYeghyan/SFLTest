@@ -8,6 +8,9 @@
 <h1>admin page</h1>
 <br/>
 
+<a wicket:id="toHomePage"><h3>go to home page</h3></a>
+<a wicket:id="toWaiterPage"><h3>go to waiter page</h3></a>
+
 
 <div wicket:id="userMarkup">
     <div wicket:id="userModal"></div>
@@ -24,9 +27,9 @@
 <div wicket:id="userDataViewMarkup">
     <table border="1">
         <tr>
-            <td>Name</td>
-            <td>Username</td>
-            <td>User type</td>
+            <th>Name</th>
+            <th>Username</th>
+            <th>User type</th>
         </tr>
         <tr wicket:id="userDataView">
             <td wicket:id="name"></td>
@@ -42,8 +45,8 @@
 <h2>create table</h2>
 <br>
 <form wicket:id="tableForm">
-    <input type="text" wicket:id="tableNumber">
-    <input type="submit" wicket:id="waiterToTableSubmit">
+  number  <input type="text" wicket:id="tableNumber">
+    <input type="submit" wicket:id="tableSubmit" value="create table">
 </form>
 <br>
 
@@ -51,8 +54,9 @@
 <br>
 <div>
 <form wicket:id="productForm">
-    <input type="text" wicket:id="productName">
-    <input type="submit" >
+   name <input type="text" wicket:id="productName">
+   price <input type="text" wicket:id="productPriceTextField">
+    <input type="submit" value="create product">
 </form>
 </div>
 <br>
@@ -62,7 +66,7 @@
 <form wicket:id="waitersToTables">
  select waiter            <select wicket:id="selectWaiter"></select>
  select number of table   <select wicket:id="selectTable"></select>
- <br><br>   <input type="submit">
+ <input type="submit" value="attach">
 </form>
 </div>
 

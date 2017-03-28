@@ -21,6 +21,7 @@ import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.repeater.Item;
@@ -76,6 +77,7 @@ public class ManagerPage extends WebPage implements Serializable {
     private void initialize() {
 
         FeedbackPanel feedbackPanel = new FeedbackPanel("feedback");
+        feedbackPanel.setOutputMarkupId(true);
         add(feedbackPanel);
 
         UsersDataViewContainer usersDataViewContainer = new UsersDataViewContainer("userDataViewMarkup", new Model<>());
@@ -87,10 +89,34 @@ public class ManagerPage extends WebPage implements Serializable {
         add(waiterToTableContainer);
 
         TextField<Integer> tableNumberTextField = new TextField<>("tableNumber", new PropertyModel<>(tablePageModel, "number"));
+        tableNumberTextField.setType(Integer.class);
+
+        Link toHomePageLink = new Link("toHomePage") {
+            private static final long serialVersionUID = 4579251015247592338L;
+
+            @Override
+            public void onClick() {
+                setResponsePage(HomePage.class);
+            }
+        };
+
+        Link toWaiterPageLink = new Link("toWaiterPage") {
+            private static final long serialVersionUID = -8640641274385757189L;
+
+            @Override
+            public void onClick() {
+                setResponsePage(WaiterPage.class);
+            }
+        };
+
+        add(toHomePageLink);
+        add(toWaiterPageLink);
+
 
         Form<Void> tableForm = new Form<Void>("tableForm");
 
-        tableForm.add(new AjaxButton("waiterToTableSubmit") {
+
+        tableForm.add(new AjaxButton("tableSubmit") {
 
             private static final long serialVersionUID = 4395617752883731213L;
 
@@ -107,12 +133,15 @@ public class ManagerPage extends WebPage implements Serializable {
 
                 target.add(waiterToTableContainer);
 
+                info("table was created");
+
+                target.add(feedbackPanel);
+
             }
+
+
         });
-
         add(tableForm);
-
-
         tableForm.add(tableNumberTextField);
 
 
@@ -128,7 +157,6 @@ public class ManagerPage extends WebPage implements Serializable {
             }
         });
 
-
         userModalWindow = new ModalWindow("userModal");
 
         WaiterCreatePanel waiterCreatePanel = new WaiterCreatePanel("content", usersDataViewContainer, waiterToTableContainer, userModalWindow, userPageModel);
@@ -141,15 +169,21 @@ public class ManagerPage extends WebPage implements Serializable {
 
 
         TextField<String> productNameTextField = new TextField<>("productName", new PropertyModel<>(productPageModel, "name"));
+        productNameTextField.setRequired(true);
+
+        TextField<Integer> productPriceTextField = new TextField<Integer>("productPriceTextField", new PropertyModel<>(productPageModel, "price"));
+        productPriceTextField.setRequired(true);
 
         Form<Void> productForm = new Form<Void>("productForm") {
             @Override
             protected void onSubmit() {
                 managerHelper.createProduct(productPageModel);
+                info("product created");
             }
         };
         add(productForm);
         productForm.add(productNameTextField);
+        productForm.add(productPriceTextField);
 
 
     }
@@ -168,7 +202,7 @@ public class ManagerPage extends WebPage implements Serializable {
 
             setOutputMarkupId(true);
 
-            ChoiceRenderer<User> userChoiceRenderer = new ChoiceRenderer<>("name");
+            ChoiceRenderer<User> userChoiceRenderer = new ChoiceRenderer<>("username");
 
             DropDownChoice<User> userDropDownChoice = new DropDownChoice<User>("selectWaiter", new PropertyModel<>(tablePageModel, "user"), managerHelper.getAllUsers(userPageModel), userChoiceRenderer) {
 
@@ -180,15 +214,21 @@ public class ManagerPage extends WebPage implements Serializable {
 
                 private static final long serialVersionUID = -7716875990877334803L;
             };
+
             Form<Void> waitersToTables = new Form<Void>("waitersToTables") {
                 private static final long serialVersionUID = -4994263874581451967L;
 
                 @Override
-
                 protected void onSubmit() {
 
-                    managerHelper.setWaiterToTable(tablePageModel);
+                    if (tablePageModel.getUser().getUsername().equals("poxos1")) {
+                        info("you can't attach manager to table");
 
+                    } else {
+                        managerHelper.setWaiterToTable(tablePageModel);
+
+                        info("waiter was attached to table");
+                    }
                 }
             };
             userDropDownChoice.setRequired(true);
